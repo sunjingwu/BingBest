@@ -34,9 +34,12 @@ class Downloader:
 		width, height = get_screen_resolution()
 		url = '{}_{}x{}.jpg'.format(self.bing+urlbase, width, height)
 		name = url.split('=')[-1]
-		pic = requests.get(url).content
-		with open(self._save_path+name, 'wb') as f:
-			f.write(pic)
+		# 判断文件是否已经存在，不存在再下载
+		if not os.path.exists(self._save_path+name):
+			pic = requests.get(url).content
+			# TODO 图片添加文案
+			with open(self._save_path+name, 'wb') as f:
+				f.write(pic)
 		logging.info("Get image {}".format(name))
 		self._got_pic = True
 		self._image = self._save_path + name
