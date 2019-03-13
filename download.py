@@ -13,7 +13,7 @@ class Downloader:
 			-1: tomorrow
 			i>0: i days before today
 		'''
-		self.bing = 'https://www.bing.com'
+		self.bing = 'https://cn.bing.com'
 		self.url = '{}/HPImageArchive.aspx?format=js&idx={}&n=1&cc={}'.format(self.bing, date, country) # The Bing Wallpaper API
 		# print(self.url)
 		self._save_path = save_path + os.path.sep
@@ -33,7 +33,7 @@ class Downloader:
 		urlbase = resp['images'][0]['urlbase']
 		width, height = get_screen_resolution()
 		url = '{}_{}x{}.jpg'.format(self.bing+urlbase, width, height)
-		name = url.split('/')[-1]
+		name = url.split('=')[-1]
 		pic = requests.get(url).content
 		with open(self._save_path+name, 'wb') as f:
 			f.write(pic)
